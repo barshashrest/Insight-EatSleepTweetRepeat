@@ -6,7 +6,7 @@ from kafka.producer import SimpleProducer
 
 class SListener(StreamListener):
 
-    def __init__(self, api = None, fprefix = 'streamer', address = '52.8.172.49'):
+    def __init__(self, api = None, fprefix = 'streamer', address = '52.8.153.198'):
         self.api = api or API()
         self.counter = 0
         self.fprefix = fprefix

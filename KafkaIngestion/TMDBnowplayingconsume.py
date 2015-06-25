@@ -5,7 +5,7 @@ import csv
 from kafka.client import KafkaClient
 from kafka.consumer import SimpleConsumer
 
-class ConsumeMovieTweets(object):
+class ConsumeNPmovies(object):
 	"""Kafka consumer for movie tweets. The functions will consume messages, then feed into HDFS after a batch file created exceed 20MB (even though each batch can put upto 128MB of data)
 """
 
@@ -13,13 +13,13 @@ class ConsumeMovieTweets(object):
 
 		self.client = KafkaClient(address)
 		self.consumer = SimpleConsumer (self.client, group, topic, max_buffer_size= 1310720000)
-		self.hadoop_path = "/Watching/HadoopHistory"
+		self.hadoop_path = "/Watching/TMDB/NP/HadoopHistory"
 		self.topic = topic
 		self.group = group
 		self.tempfilepath = None
 		self.tempfile=None
 		self.blockcount=0
-		self.cached_path= "/Watching/HadoopCached"
+		self.cached_path= "/Watching/TMDB/NP/HadoopCached"
 		self.csvfile = None
 		self.csvfilepath= None
 
@@ -29,7 +29,7 @@ class ConsumeMovieTweets(object):
 		timestamp = time.strftime('%Y%m%d%H%M%S')
 
 		#open file to write, this is temporary file made which is the intermediate which is the batch file that gets flushed to HDFS 
-		self.tempfilepath = "%s/kafka_%s_%s_%s.json" % (outputdirectory,
+		self.tempfilepath = "%s/kafka_%s_%s_%s_moviesNP.json" % (outputdirectory,
                                                          self.topic,
                                                          self.group,
                                                          timestamp)
@@ -40,28 +40,28 @@ class ConsumeMovieTweets(object):
                                #                          timestamp)
 		
 		
-		while True:	
 	
-			try:
-			# get 1000 tweets at a time to be consumed by Kafka
-		    		consumedmessages = self.consumer.get_messages(count=1000, block = False) 	
-		        	for consumedmessage in consumedmessages:
-					self.tempfile.write(consumedmessage.message.value)
-				#print("here at least")
+	
+		try:
+				# get 1000 tweets at a time to be consumed by Kafka
+		    	consumedmessages = self.consumer.get_messages(count=1000, block = False) 	
+		    	for consumedmessage in consumedmessages:
+				self.tempfile.write(consumedmessage.message.value)
+					#print("here at least")
 					
 
 				#	filecsv = json.loads(tempfile)
 #					print(consumedmessage.message.value)		    
 					#print ("here??")
 					
-		    			if self.tempfile.tell() > 7000000:
-						print("sending")
-						self.sendtohdfs(outputdirectory)
+		    	#	if self.tempfile.tell() > 1500:
+				self.sendtohdfs(outputdirectory)
 
-		    				self.consumer.commit()
+		    		self.consumer.commit()
+				break;
 
-			except:
-		    		self.consumer.seek(0,2)
+		except:
+		    	self.consumer.seek(0,2)
 
 	def sendtohdfs(self,outputdirectory):
 		print("at the function  sendtohedfs")
@@ -81,11 +81,11 @@ class ConsumeMovieTweets(object):
 		#print ("csv file closed")
 		timestamp = time.strftime('%Y%m%d%H%M%S')
 
-		hadoop_path = "%s/%s_%s_%s.json" % (self.hadoop_path, self.group,
+		hadoop_path = "%s/%s_%s_%s_moviesNP.json" % (self.hadoop_path, self.group,
                                                self.topic, timestamp)	
-		cached_path = "%s/%s_%s_%s.json" % (self.cached_path, self.group,
+		cached_path = "%s/%s_%s_%s_moviesNP.json" % (self.cached_path, self.group,
                                                self.topic, timestamp)
-		print "Block {}: Flushing 2000000 lines file to HDFS => {}".format(str(self.blockcount),
+		print "Block {}: Flushing 15000 lines file to HDFS => {}".format(str(self.blockcount),
                                                                   hadoop_path)    
 		self.blockcount+=1
 
@@ -101,7 +101,7 @@ class ConsumeMovieTweets(object):
 		os.remove(self.tempfilepath)
 		#os.remove(self.csvfilepath)
 		timestamp = time.strftime('%Y%m%d%H%M%S')
-		self.tempfilepath = "%s/kafka_%s_%s_%s.json" % (outputdirectory,
+		self.tempfilepath = "%s/kafka_%s_%s_%s_movieNP.json" % (outputdirectory,
                                                          self.topic,
                                                          self.group,
                                                          timestamp)	
@@ -114,8 +114,8 @@ class ConsumeMovieTweets(object):
 if __name__ == '__main__':
 
 	print "Messages are being consumed"
-	cons = ConsumeMovieTweets(address="localhost:9092", group="hdfs", topic="movietweetstest4")
-    	cons.consumetopic("/home/ubuntu/WhatAreYouWatching/KafkaIntoHdfs")
+	cons = ConsumeNPmovies(address="localhost:9092", group="hdfs", topic="nowplayingmovies2")
+    	cons.consumetopic("/home/ubuntu/WhatAreYouWatching/ProducerTMDB/NowPlaying")
 		
 	#/usr/local/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic upcomingmovies
 
