@@ -14,7 +14,7 @@ class ProducerTMDB():
 	def getnowplayingmoviesTMDB(self):
 		
 		time.sleep(1)
-		request = urllib2.Request('http://api.themoviedb.org/3/movie/now_playing?api_key=696cda7c7d99060a5e8ccfa9a35d3b5d')	
+		request = urllib2.Request('http://api.themoviedb.org/3/movie/now_playing?api_key=your_api_key')	
 		response = urllib2.urlopen(request)
 		nowplayingmovies = response.read()
  		jsonload = json.loads(nowplayingmovies)
