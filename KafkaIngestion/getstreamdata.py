@@ -2,15 +2,14 @@ from slistener import SListener
 import time, tweepy, sys, os
 
 ## authentication
-username = 'barsha05' ## put a valid Twitter username here
-password = '' ## put a valid Twitter password here
-consumer_key ="1i94gO1Fdm47BL8nnDttB9Nfz"
 
-consumer_secret = "srMkOvjYFDyfqInmJuK5p1p4s3k7MRPJWnNPGAjierbERJ0lnd"
+consumer_key ="your consumer key"
 
-access_token = "52691683-9MfkoxrOR5xIv5gFVjkWGewDYc3PMy6lqlmH7UIEx"
+consumer_secret = "your consumer secret"
 
-access_token_secret = "uFse01zJv608JeCEFJnSpV0gSqAaghimU0K6P7N9wtmgl"
+access_token = "your access token"
+
+access_token_secret = "your access token secret"
 
 # OAuth process, using the keys and tokens
 
