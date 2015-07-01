@@ -1,8 +1,6 @@
-# Insight-EatSleepTweetRepeat
-#Author: Barsha Shrestha
 
 #[EAT SLEEP TWEET REPEAT WEBSITE](http://eatsleeptweetrepeat.itsbeta.com/index#home)
-
+Author: Barsha Shrestha
 
 1. Introduction
 2. Data sources
