@@ -1,5 +1,3 @@
-Changes
-
 
 #[EAT SLEEP TWEET REPEAT](http://eatsleeptweetrepeat.itsbeta.com/index#home)
 Author: Barsha Shrestha
@@ -22,7 +20,7 @@ I gathered my data from the streaming API of Twitter using the Tweepy library. F
 
 #3 Pipeline
 
-![alt tag](https://raw.github.com/barshashrest/Insight-EatSleepTweetRepeat/Pipeline.png)
+![alt tag](https://raw.github.com/barshashrest/Insight-EatSleepTweetRepeat/master/Pipeline.png)
 
 ## Ingestion
 
