@@ -1,5 +1,3 @@
-Changes
-
 
 #[EAT SLEEP TWEET REPEAT](http://eatsleeptweetrepeat.itsbeta.com/index#home)
 Author: Barsha Shrestha
@@ -22,7 +20,7 @@ I gathered my data from the streaming API of Twitter using the Tweepy library. F
 
 #3 Pipeline
 
-![alt tag](https://raw.github.com/barshashrest/Insight-EatSleepTweetRepeat/Pipeline.png)
+![alt tag](https://raw.github.com/barshashrest/Insight-EatSleepTweetRepeat/master/Pipeline.png)
 
 ## Ingestion
 
@@ -38,7 +36,8 @@ I used Spark and SparkSQL to process the data in batches from HDFS and make my q
 I had to group all the tweets based on movie name and the date of the creation of the tweet because I wanted to check the impact of tweets on a day-to-day basis with the vote count received by the movie. For this, Cassandra was an ideal serving layer because I could save all the info based on movie name and have the day as the clustering column so that I could get each day's stats for any upcoming and now playing movies. Finally, the Cassandra table could be used to fetch data for my front-end.
 
 ##Front-end
-Using Flask for website handling, Bootstrap for the template and HighStocks (part of Highcharts) for data representation, I was able t build my front-end and show my work online. I was able to produce two parallel charts, one that show how many tweets were produced each day for any movie that's in the database (that the user could input) and another chart that gave the average vote count for the movie on the same range of days. As such, I was able to compare the two charts and infer on the relationship of tweets on significant outcomes of movies in the box office
+Using Flask for website handling, Bootstrap for the template and HighStocks (part of Highcharts) for data representation, I was able t build my front-end and show my work online. I was able to produce two parallel charts, one that show how many tweets were produced each day for any movie that's in the database (that the user could input) and another chart that gave the average vote count for the movie on the same range of days. As such, I was able to compare the two charts and infer on the relationship of tweets on significant outcomes of movies in the box office.
+Check out my other repository [EatSleepTweetRepeatWeb](https://github.com/barshashrest/EatSleeptTweetRepeatWeb) for the website.
 
 
 

@@ -17,24 +17,12 @@ import time
 sc = SparkContext("spark://ip-172-31-4-243:7077", "sparksqlex2")
 sqlContext = SQLContext(sc)
 
-class Correlationtable4(Model):
-  moviename = columns.Text(primary_key = True)
-  year = columns.Integer(primary_key= True, clustering_order = "DESC")
-  month = columns.Integer(primary_key= True, clustering_order = "DESC")
-  day = columns.Integer(primary_key= True, clustering_order = "DESC")	
-  totaltweets = columns.Integer()
-  totalretweets1 = columns.Integer()
-  popularity = columns.Integer()
-  voteaverage = columns.Integer()
-  #retweetcount1 = columns.Text()
-  def __repr__(self):
-    return '%s %d' % (self.moviename, self.ts, self.totaltweets, self.totalretweets1, self.popularity, self.voteaverage)
+
 
 # Connect to the demo keyspace on our cluster running at 127.0.0.1
 connection.setup(['127.0.0.1'], "movietweets")
 
-# Sync your model with your cql table
-sync_table(Correlationtable4)
+
 
 tweetspath = "hdfs://ec2-52-8-153-198.us-west-1.compute.amazonaws.com:9000/Watching/HadoopCached"
 nowplayingpath = "hdfs://ec2-52-8-153-198.us-west-1.compute.amazonaws.com:9000/Watching/TMDB/NP/HadoopCached"
