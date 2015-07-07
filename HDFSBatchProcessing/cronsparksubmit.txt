@@ -1,0 +1,1 @@
+44 1 * * * /home/ubuntu/Project_Insight_EatTweetSleepRepeat/HDFSBatchProcessing/sparksubmit.sh
