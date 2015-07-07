@@ -1,11 +1,11 @@
 MAILTO= shres22b@mtholyoke.edu
-41 01 * * * /home/ubuntu/Project_Insight_EatTweetSleepRepeat/KafkaIngestion/getmovieinfotmdb.py >/dev/null
+00 18 * * * /home/ubuntu/Project_Insight_EatTweetSleepRepeat/KafkaIngestion/getmovieinfotmdb.py >/dev/null
 
 MAILTO= shres22b@mtholyoke.edu
-41 01 * * * /home/ubuntu/Project_Insight_EatTweetSleepRepeat/KafkaIngestion/getupcominginfo.py >/dev/null
+00 18 * * * /home/ubuntu/Project_Insight_EatTweetSleepRepeat/KafkaIngestion/getupcominginfo.py >/dev/null
 
 MAILTO= shres22b@mtholyoke.edu
-42 01 * * * /home/ubuntu/Project_Insight_EatTweetSleepRepeat/KafkaIngestion/TMDBnowplayingconsume.py >/dev/null
+00 18 * * * /home/ubuntu/Project_Insight_EatTweetSleepRepeat/KafkaIngestion/TMDBnowplayingconsume.py >/dev/null
 
 
 

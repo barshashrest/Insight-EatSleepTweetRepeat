@@ -13,10 +13,10 @@ class ProducerTMDB():
 		self.producer = SimpleProducer(self.client)
 
 
-	def getnowplayingmoviesTMDB(self):
+	def getupcomingmoviesTMDB(self):
 		
 		time.sleep(1)
-		request = urllib2.Request('http://api.themoviedb.org/3/movie/now_playing?api_key=696cda7c7d99060a5e8ccfa9a35d3b5d')	
+		request = urllib2.Request('http://api.themoviedb.org/3/movie/upcoming?api_key=696cda7c7d99060a5e8ccfa9a35d3b5d')	
 		response = urllib2.urlopen(request)
 		nowplayingmovies = response.read()
  		jsonload = json.loads(nowplayingmovies)
@@ -63,7 +63,7 @@ class ProducerTMDB():
 def main():
 	prod = ProducerTMDB()
 		
-	prod.getnowplayingmoviesTMDB()
+	prod.getupcomingmoviesTMDB()
 	#prod.getupcomingmoviesTMDB()
 
 if __name__ == "__main__":

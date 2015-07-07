@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import os
 import time
 import json
@@ -54,17 +56,17 @@ class ConsumeNPmovies(object):
 #					print(consumedmessage.message.value)		    
 					#print ("here??")
 					
-		    	#	if self.tempfile.tell() > 1500:
-				self.sendtohdfs(outputdirectory)
+		    		if self.tempfile.tell() > 15000:
+					self.sendtohdfs(outputdirectory)
 
-		    		self.consumer.commit()
-				break;
+		    			self.consumer.commit()
+					break;
 
 		except:
 		    	self.consumer.seek(0,2)
 
 	def sendtohdfs(self,outputdirectory):
-		print("at the function  sendtohedfs")
+		print("at the function  sendtohdfs")
 		#self.tempfile = json.loads(self.tempfile)
 		#print("loaded tempfile")
 		#f = csv.writer(open(self.csvfilepath, "wb+"))

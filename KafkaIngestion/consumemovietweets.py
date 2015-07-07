@@ -1,4 +1,5 @@
 import os
+from os import path
 import time
 import json
 import csv
@@ -13,13 +14,13 @@ class ConsumeMovieTweets(object):
 
 		self.client = KafkaClient(address)
 		self.consumer = SimpleConsumer (self.client, group, topic, max_buffer_size= 1310720000)
-		self.hadoop_path = "/Watching/HadoopHistory"
+		self.hadoop_path = "/Watching/HadoopCached"
 		self.topic = topic
 		self.group = group
 		self.tempfilepath = None
 		self.tempfile=None
 		self.blockcount=0
-		self.cached_path= "/Watching/HadoopCached"
+		self.cached_path= "/Watching/HadoopHistory"
 		self.csvfile = None
 		self.csvfilepath= None
 
@@ -54,17 +55,19 @@ class ConsumeMovieTweets(object):
 #					print(consumedmessage.message.value)		    
 					#print ("here??")
 					
-		    			if self.tempfile.tell() > 7000000:
+		    			if self.tempfile.tell() > 60000000:
+						#print os.path.getSize(tempfile)	
 						print("sending")
+						time.sleep(1)
+						print (self.tempfile.tell())
 						self.sendtohdfs(outputdirectory)
 
 		    				self.consumer.commit()
-
+						
 			except:
 		    		self.consumer.seek(0,2)
 
 	def sendtohdfs(self,outputdirectory):
-		print("at the function  sendtohedfs")
 		#self.tempfile = json.loads(self.tempfile)
 		#print("loaded tempfile")
 		#f = csv.writer(open(self.csvfilepath, "wb+"))
@@ -74,7 +77,7 @@ class ConsumeMovieTweets(object):
     		#	f.writerow([x["id_str"], 
                 #	x["text"]])
 
-		"""Send 20MB file to hdfs"""
+		"""Send 5 KB file to hdfs"""
 		self.tempfile.close()
 		#f.close()
 
@@ -85,7 +88,7 @@ class ConsumeMovieTweets(object):
                                                self.topic, timestamp)	
 		cached_path = "%s/%s_%s_%s.json" % (self.cached_path, self.group,
                                                self.topic, timestamp)
-		print "Block {}: Flushing 2000000 lines file to HDFS => {}".format(str(self.blockcount),
+		print "Block {}: Flushing 60MB file to HDFS => {}".format(str(self.blockcount),
                                                                   hadoop_path)    
 		self.blockcount+=1
 
