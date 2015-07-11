@@ -36,10 +36,7 @@ class ConsumeNPmovies(object):
                                                          self.group,
                                                          timestamp)
         	self.tempfile = open(self.tempfilepath,"w")
-		#self.csvfilepath = "%s/kafka_%s_%s_%s.csv" % (outputdirectory,
-                             #                            self.topic,
-                              #                           self.group,
-                               #                          timestamp)
+		p)
 		
 		
 	
@@ -48,14 +45,11 @@ class ConsumeNPmovies(object):
 				# get 1000 tweets at a time to be consumed by Kafka
 		    	consumedmessages = self.consumer.get_messages(count=1000, block = False) 	
 		    	for consumedmessage in consumedmessages:
+		    		
+		    		#write to tempfile from consumer
 				self.tempfile.write(consumedmessage.message.value)
-					#print("here at least")
-					
-
-				#	filecsv = json.loads(tempfile)
-#					print(consumedmessage.message.value)		    
-					#print ("here??")
-					
+				
+				#if tempfile is over 15KB, shove it to HDFS (because this file is not going to be 128MB file, like a benchmark block in HDFS, a compromise is made here)	
 		    		if self.tempfile.tell() > 15000:
 					self.sendtohdfs(outputdirectory)
 
@@ -65,22 +59,11 @@ class ConsumeNPmovies(object):
 		except:
 		    	self.consumer.seek(0,2)
 
-	def sendtohdfs(self,outputdirectory):
-		print("at the function  sendtohdfs")
-		#self.tempfile = json.loads(self.tempfile)
-		#print("loaded tempfile")
-		#f = csv.writer(open(self.csvfilepath, "wb+"))
-		#print("at sendtohedfs")
-		#f.writerow(["id_str","text" ])
-		#for x in x:
-    		#	f.writerow([x["id_str"], 
-                #	x["text"]])
+	def sendtohdfs(self,outputdirectory)
 
-		"""Send 20MB file to hdfs"""
+		"""Send 15 KB file to hdfs"""
 		self.tempfile.close()
-		#f.close()
-
-		#print ("csv file closed")
+	
 		timestamp = time.strftime('%Y%m%d%H%M%S')
 
 		hadoop_path = "%s/%s_%s_%s_moviesNP.json" % (self.hadoop_path, self.group,
@@ -91,26 +74,21 @@ class ConsumeNPmovies(object):
                                                                   hadoop_path)    
 		self.blockcount+=1
 
-		#place blocked messages to history folder
-		#os.system("pkexec visudo  hdfs dfs -put %s %s" % (self.tempfilepath,
-                 #                                       hadoop_path))
+	         #start collecting info in new file all over again                          
 		os.system("sudo -u ubuntu /usr/local/hadoop/bin/hdfs dfs -put %s %s" % (self.tempfilepath,
                                                        hadoop_path))
-
+		 #start collecting info in new file all over again 
 		os.system("sudo -u ubuntu /usr/local/hadoop/bin/hdfs dfs -put %s %s" % (self.tempfilepath,
                                                        cached_path))
 		#remove the temporary file
 		os.remove(self.tempfilepath)
-		#os.remove(self.csvfilepath)
+	
 		timestamp = time.strftime('%Y%m%d%H%M%S')
 		self.tempfilepath = "%s/kafka_%s_%s_%s_movieNP.json" % (outputdirectory,
                                                          self.topic,
                                                          self.group,
                                                          timestamp)	
-		self.csvfilepath = "%s/kafka_%s_%s_%s.json" % (outputdirectory,
-                                                         self.topic,
-                                                         self.group,
-                                                         timestamp)
+	
 		self.tempfile = open(self.tempfilepath, "w")
 
 if __name__ == '__main__':
@@ -119,6 +97,3 @@ if __name__ == '__main__':
 	cons = ConsumeNPmovies(address="localhost:9092", group="hdfs", topic="nowplayingmovies2")
     	cons.consumetopic("/home/ubuntu/WhatAreYouWatching/ProducerTMDB/NowPlaying")
 		
-	#/usr/local/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic upcomingmovies
-
-	#/usr/local/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic movietweets
