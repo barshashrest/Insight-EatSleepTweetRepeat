@@ -1,3 +1,5 @@
+#all definitions from tweepy.org. Modifications made (eg: kafka producer and error handling)
+
 from tweepy import StreamListener
 import json, time, sys
 from kafka.client import KafkaClient
@@ -21,9 +23,7 @@ class SListener(StreamListener):
 	print "hello"
     def on_data(self, data):
 	
-	#collectData = True
-	#while collectData:
-		#time.sleep(1)
+
 	
         	if  'in_reply_to_status' in data:
             		self.on_status(data)
@@ -40,11 +40,12 @@ class SListener(StreamListener):
             		return false
 
  		print data 	
+ 		
+ 		#produce messages (i.e. data)
 		self.producer.send_messages('movietweetstest4', data)
 
     def on_status(self, status):
-#	statusboolean=True
-#	while statusboolean:
+
 		time.sleep(1)
         	self.output.write(status + "\n")
 
