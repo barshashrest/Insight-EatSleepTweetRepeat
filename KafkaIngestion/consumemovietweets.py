@@ -58,7 +58,7 @@ class ConsumeMovieTweets(object):
 
 		"""Send 5 KB file to hdfs"""
 		self.tempfile.close()
-		#f.close()
+	
 
 		timestamp = time.strftime('%Y%m%d%H%M%S')
 
@@ -77,7 +77,7 @@ class ConsumeMovieTweets(object):
                                                        cached_path))
 		#remove the temporary file
 		os.remove(self.tempfilepath)
-		#os.remove(self.csvfilepath)
+	
 		timestamp = time.strftime('%Y%m%d%H%M%S')
 		self.tempfilepath = "%s/kafka_%s_%s_%s.json" % (outputdirectory,
                                                          self.topic,
