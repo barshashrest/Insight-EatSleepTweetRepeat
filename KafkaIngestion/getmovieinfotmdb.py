@@ -12,7 +12,7 @@ class ProducerTMDB():
 		self.client = KafkaClient(address)
 		self.producer = SimpleProducer(self.client)
 
-
+	#get json file, then add date when the json file was extracted 
 	def getnowplayingmoviesTMDB(self):
 		
 		time.sleep(1)
