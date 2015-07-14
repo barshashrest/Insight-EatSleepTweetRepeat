@@ -23,17 +23,17 @@ sqlContext = SQLContext(sc)
 connection.setup(['127.0.0.1'], "movietweets")
 
 
-
+#get data from hdfs
 tweetspath = "hdfs://ec2-52-8-153-198.us-west-1.compute.amazonaws.com:9000/Watching/HadoopCached"
 nowplayingpath = "hdfs://ec2-52-8-153-198.us-west-1.compute.amazonaws.com:9000/Watching/TMDB/NP/HadoopCached"
 
-#hdfs_nowplayingmovies_20150617094655_moviesNP.json
+
 people = sqlContext.jsonFile(tweetspath)
 nowplaying = sqlContext.jsonFile(nowplayingpath)
 
 # Register this SchemaRDD as a table.
 people.registerTempTable("people")
-#upcoming.registerTempTable("upcoming")
+
 nowplaying.registerTempTable("nowplaying")
 
 # SQL statements can be run by using the sql methods provided by sqlContext.
