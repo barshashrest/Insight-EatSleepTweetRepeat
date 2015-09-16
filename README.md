@@ -39,7 +39,12 @@ I had to group all the tweets based on movie name and the date of the creation o
 Using Flask for website handling, Bootstrap for the template and HighStocks (part of Highcharts) for data representation, I was able t build my front-end and show my work online. I was able to produce two parallel charts, one that show how many tweets were produced each day for any movie that's in the database (that the user could input) and another chart that gave the average vote count for the movie on the same range of days. As such, I was able to compare the two charts and infer on the relationship of tweets on significant outcomes of movies in the box office.
 Check out my other repository [EatSleepTweetRepeatWeb](https://github.com/barshashrest/EatSleeptTweetRepeatWeb) for the website.
 
+##Important Updates:
+The site for the website had to be shut down because it was running on an expensive node. The slideshare for demo of this project is at:
+http://www.slideshare.net/barshashrest/eat-sleep-tweet-repeat
 
+The YouTube demo is at :
+https://www.youtube.com/watch?v=PomdT__2sV0
 
 
 
